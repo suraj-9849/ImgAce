@@ -69,7 +69,9 @@ export const handler = async (event: awsLambda) => {
         let sharpImage = Sharp(imageBuffer, { failOn: "none", animated: true });
 
         // applying the transformations based on the queryParameters using sharp package!:
+        if(options.width==undefined || options.height== undefined ) return;
         if (options.width || options.height) {
+            if(parseInt(options.width)<0 || parseInt(options.height) <0) return;
             sharpImage = sharpImage.resize({
                 width: options.width ? parseInt(options.width) : 100,
                 height: options.height ? parseInt(options.height) : 100,
